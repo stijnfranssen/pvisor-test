@@ -1,0 +1,22 @@
+* text auto
+
+# Enforce text on python and rust files
+*.rs text
+*.py text
+
+# Ignore top level
+.github export-ignore
+
+
+# Plot output files
+*.csv binary
+*.PTF binary
+*.plt binary
+*.PLT binary
+*.xtv binary
+
+# Model input files
+*.MEL linguist-vendored
+MODEL linguist-vendored
+*.i linguist-vendored
+*.inp linguist-vendored
