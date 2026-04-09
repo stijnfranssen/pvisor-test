@@ -25,10 +25,10 @@ jobs:
         platform:
           - runner: ubuntu-22.04
             target: x86_64
-          # - runner: ubuntu-22.04
-          #   target: x86
-          # - runner: ubuntu-22.04
-          #   target: aarch64
+          - runner: ubuntu-22.04
+            target: x86
+          - runner: ubuntu-22.04
+            target: aarch64
 
     steps:
       - uses: actions/checkout@v6
@@ -76,66 +76,66 @@ jobs:
             pytest
 
 
-  # musllinux:
-  #   runs-on: ${{ matrix.platform.runner }}
-  #   strategy:
-  #     matrix:
-  #       platform:
-  #         - runner: ubuntu-22.04
-  #           target: x86_64
-  #         - runner: ubuntu-22.04
-  #           target: x86
-  #         - runner: ubuntu-22.04
-  #           target: aarch64
-  #   steps:
-  #     - uses: actions/checkout@v6
-  #     - uses: actions/setup-python@v6
-  #       with:
-  #         python-version: "3.13"
-  #     - name: Build wheels
-  #       uses: PyO3/maturin-action@v1
-  #       with:
-  #         target: ${{ matrix.platform.target }}
-  #         args: --release --out dist --find-interpreter
-  #         sccache: ${{ !startsWith(github.ref, 'refs/tags/') }}
-  #         manylinux: musllinux_1_2
-  #     - name: Upload wheels
-  #       uses: actions/upload-artifact@v6
-  #       with:
-  #         name: wheels-musllinux-${{ matrix.platform.target }}
-  #         path: dist
-  #     - name: pytest
-  #       if: ${{ startsWith(matrix.platform.target, 'x86_64') }}
-  #       run: |
-  #         set -e
-  #         docker run --rm -v ${{ github.workspace }}:/io -w /io alpine:latest sh -c '
-  #           apk add py3-pip py3-virtualenv
-  #           apk add --no-cache gcc musl-dev python3-dev py3-numpy py3-pip py3-virtualenv
-  #           python3 -m virtualenv .venv
-  #           source .venv/bin/activate
-  #           pip install --upgrade pip
-  #           pip install pandas numpy pytest sphinx sphinx_rtd_theme maturin py-xdrlib 
-  #           pip install pvisor --no-index --find-links dist --force-reinstall --no-deps
-  #           pytest
-  #         '
-  #     - name: pytest
-  #       if: ${{ !startsWith(matrix.platform.target, 'x86') }}
-  #       uses: uraimo/run-on-arch-action@v2
-  #       with:
-  #         arch: ${{ matrix.platform.target }}
-  #         distro: alpine_latest
-  #         githubToken: ${{ github.token }}
-  #         install: |
-  #           apk add py3-virtualenv
-  #           apk add --no-cache build-base musl-dev python3-dev py3-numpy py3-pip py3-virtualenv py3-pandas
-  #         run: |
-  #           set -e
-  #           python3 -m virtualenv .venv
-  #           source .venv/bin/activate
-  #           pip install --upgrade pip
-  #           pip install pytest sphinx sphinx_rtd_theme maturin py-xdrlib pandas
-  #           pip install pvisor --find-links dist --force-reinstall --no-deps
-  #           pytest
+  musllinux:
+    runs-on: ${{ matrix.platform.runner }}
+    strategy:
+      matrix:
+        platform:
+          - runner: ubuntu-22.04
+            target: x86_64
+          - runner: ubuntu-22.04
+            target: x86
+          - runner: ubuntu-22.04
+            target: aarch64
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.platform.target }}
+          args: --release --out dist --find-interpreter
+          sccache: ${{ !startsWith(github.ref, 'refs/tags/') }}
+          manylinux: musllinux_1_2
+      - name: Upload wheels
+        uses: actions/upload-artifact@v6
+        with:
+          name: wheels-musllinux-${{ matrix.platform.target }}
+          path: dist
+      - name: pytest
+        if: ${{ startsWith(matrix.platform.target, 'x86_64') }}
+        run: |
+          set -e
+          docker run --rm -v ${{ github.workspace }}:/io -w /io alpine:latest sh -c '
+            apk add py3-pip py3-virtualenv
+            apk add --no-cache gcc musl-dev python3-dev py3-numpy py3-pip py3-virtualenv
+            python3 -m virtualenv .venv
+            source .venv/bin/activate
+            pip install --upgrade pip
+            pip install pandas numpy pytest sphinx sphinx_rtd_theme maturin py-xdrlib 
+            pip install pvisor --no-index --find-links dist --force-reinstall --no-deps
+            pytest
+          '
+      - name: pytest
+        if: ${{ !startsWith(matrix.platform.target, 'x86') }}
+        uses: uraimo/run-on-arch-action@v2
+        with:
+          arch: ${{ matrix.platform.target }}
+          distro: alpine_latest
+          githubToken: ${{ github.token }}
+          install: |
+            apk add py3-virtualenv
+            apk add --no-cache build-base musl-dev python3-dev py3-numpy py3-pip py3-virtualenv py3-pandas
+          run: |
+            set -e
+            python3 -m virtualenv .venv
+            source .venv/bin/activate
+            pip install --upgrade pip
+            pip install pytest sphinx sphinx_rtd_theme maturin py-xdrlib pandas
+            pip install pvisor --find-links dist --force-reinstall --no-deps
+            pytest
 
   windows:
     runs-on: ${{ matrix.platform.runner }}
@@ -145,9 +145,9 @@ jobs:
           - runner: windows-latest
             target: x64
             python_arch: x64
-          # - runner: windows-11-arm
-          #   target: aarch64
-          #   python_arch: arm64
+          - runner: windows-11-arm
+            target: aarch64
+            python_arch: arm64
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
@@ -177,39 +177,39 @@ jobs:
           pip install pytest
           pytest
 
-  # macos:
-  #   runs-on: ${{ matrix.platform.runner }}
-  #   strategy:
-  #     matrix:
-  #       platform:
-  #         - runner: macos-15-intel
-  #           target: x86_64
-  #         - runner: macos-latest
-  #           target: aarch64
-  #   steps:
-  #     - uses: actions/checkout@v6
-  #     - uses: actions/setup-python@v6
-  #       with:
-  #         python-version: "3.13"
-  #     - name: Build wheels
-  #       uses: PyO3/maturin-action@v1
-  #       with:
-  #         target: ${{ matrix.platform.target }}
-  #         args: --release --out dist --find-interpreter
-  #         sccache: ${{ !startsWith(github.ref, 'refs/tags/') }}
-  #     - name: Upload wheels
-  #       uses: actions/upload-artifact@v6
-  #       with:
-  #         name: wheels-macos-${{ matrix.platform.target }}
-  #         path: dist
-  #     - name: pytest
-  #       run: |
-  #         set -e
-  #         python3 -m venv .venv
-  #         source .venv/bin/activate
-  #         pip install pvisor --find-links dist --force-reinstall
-  #         pip install pytest
-  #         pytest
+  macos:
+    runs-on: ${{ matrix.platform.runner }}
+    strategy:
+      matrix:
+        platform:
+          - runner: macos-15-intel
+            target: x86_64
+          - runner: macos-latest
+            target: aarch64
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.platform.target }}
+          args: --release --out dist --find-interpreter
+          sccache: ${{ !startsWith(github.ref, 'refs/tags/') }}
+      - name: Upload wheels
+        uses: actions/upload-artifact@v6
+        with:
+          name: wheels-macos-${{ matrix.platform.target }}
+          path: dist
+      - name: pytest
+        run: |
+          set -e
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip install pvisor --find-links dist --force-reinstall
+          pip install pytest
+          pytest
 
   sdist:
     runs-on: ubuntu-latest
