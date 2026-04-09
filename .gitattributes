@@ -9,11 +9,11 @@
 
 
 # Plot output files
-*.csv binary
-*.PTF binary
-*.plt binary
-*.PLT binary
-*.xtv binary
+*.csv binary linguist-vendored
+*.PTF binary linguist-vendored
+*.plt binary linguist-vendored
+*.PLT binary linguist-vendored
+*.xtv binary linguist-vendored
 
 # Model input files
 *.MEL linguist-vendored
