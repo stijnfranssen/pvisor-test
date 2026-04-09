@@ -1,0 +1,331 @@
+free format
+*m: SNAP:Symbolic Nuclear Analysis Package, Version 4.3.1, Sept 5, 2024
+*m: PLUGIN:TRACE Version 4.6.9
+*m: CODE:TRACE V 5.0 Patch 5
+*m: DATE:11/20/25
+*
+*
+*************
+* main data *
+*************
+*
+*       numtcr          ieos         inopt          nmat          id2o
+             0             0             1             0             0
+*
+*
+*****************
+* namelist data *
+*****************
+*
+ &inopts
+  ikfac=1,
+  timemethod=-1,
+  usesjc=3,
+  nhtstr=2
+ &end
+*
+***************
+* Model Flags *
+***************
+*
+*        dstep         timet
+             0           0.0
+*       stdyst        transi         ncomp          njun          ipak
+             0             1             7             4             1
+*         epso          epss
+        1.0E-4        1.0E-4
+*       oitmax        sitmax        isolut        ncontr         nccfl
+            10            10             0             0             0
+*         ntsv          ntcb          ntcf          ntrp          ntcp
+             2             0             0             2             0
+*
+*************************
+* component-number data *
+*************************
+*
+*  Component input order (IORDER)
+*-- type ---- num ------------- name ----------------  +    jun1   jun2   jun3
+* PIPE     *     10 s *                                +       0     30
+* VALVE    *     40 s *                                +      40     10
+* VALVE    *     50 s *                                +      30     20
+* BREAK    *     60 s * Atmosphere                     +      20
+* BREAK    *     70 s * Atmosphere 2                   +      10
+* HTSTR    *     20 s * wall                           +
+* HTSTR    *     30 e * Heating element                +
+*
+*
+**************************************************
+* Starting Signal Variable Section of Model      *
+**************************************************
+*
+*         idsv          isvn          ilcn          icn1          icn2
+             1             0             0             0             0
+*
+*         idsv          isvn          ilcn          icn1          icn2
+             2            21            10             6             0
+**************************************************
+* Finished Signal Variable Section of Model      *
+**************************************************
+*
+*
+*
+*
+***********************************
+* Starting Trip Section of Model  *
+***********************************
+*
+*         Trip Storage Count Card
+*         ntse          ntct          ntsf          ntdp          ntsd
+             0             0             0             0             0
+*n: Operating check
+*
+*trip                      1
+*         idtp          isrt          iset          itst          idsg
+             1             2             0             1             2
+*      setp(1)       setp(2)
+         7.0E5         7.0E5
+*      dtsp(1)       dtsp(2)
+           0.0           0.0
+*      ifsp(1)       ifsp(2)
+             0             0
+*n: Safety Check
+*
+*trip                      2
+*         idtp          isrt          iset          itst          idsg
+             2             2             0             1             2
+*      setp(1)       setp(2)
+        1.05E6        1.05E6
+*      dtsp(1)       dtsp(2)
+           0.0           0.0
+*      ifsp(1)       ifsp(2)
+             0             0
+*
+**********************************
+* Finished Trips: Starting Extras*
+**********************************
+*
+**********************************
+* Finished Trip Section of Model *
+**********************************
+*
+*
+*
+*
+*******   type           num        userid                component name
+pipe                      10             0                        unnamed
+*       ncells         nodes          jun1          jun2          epsw
+             6             0             0            30           0.0
+*       nsides
+             1
+*         nclk         junlk        ncmpto        nclkto        nlevto
+             6            40             0             0             0
+*        theta        ientrn
+           0.0             0
+*         ichf         iconc      pipetype          ipow        npipes
+             1             0             0             0             1
+*        radin            th         houtl         houtv         toutl
+           0.0           0.0           0.0           0.0           0.0
+*        toutv          pwin         pwoff         rpwmx         pwscl
+           0.0           0.0           0.0           0.0           0.0
+* dx    *  0.026666667 0.026666667 0.026666667 0.026666667 s
+* dx    *  0.026666667 0.026666667 e
+* vol   *   1.01369E-3  1.01369E-3  1.01369E-3  1.01369E-3 s
+* vol   *   1.01369E-3  1.01369E-3 e
+* fa    *  0.038013271 0.038013271 0.038013271 0.038013271 s
+* fa    *  0.038013271 0.038013271 0.038013271 e
+* kfac  *          0.0         0.0         0.0         0.0 s
+* kfac  *          0.0         0.0         0.0 e
+* grav  *          1.0         1.0         1.0         1.0 s
+* grav  *          1.0         1.0         1.0 e
+* hd    *         0.22        0.22        0.22        0.22 s
+* hd    *         0.22        0.22        0.22 e
+* nff   *            1           1           1           1 s
+* nff   *            1           1           1 e
+* alp   *          0.0         0.0         0.0         1.0 s
+* alp   *          1.0         1.0 e
+* vl    *          0.0         0.0         0.0         0.0 s
+* vl    *          0.0         0.0         0.0 e
+* vv    *          0.0         0.0         0.0         0.0 s
+* vv    *          0.0         0.0         0.0 e
+* tl    *      372.756     372.756     372.756     372.756 s
+* tl    *      372.756     372.756 e
+* tv    *      372.756     372.756     372.756     372.756 s
+* tv    *      372.756     372.756 e
+* p     *        1.0E5       1.0E5       1.0E5       1.0E5 s
+* p     *        1.0E5       1.0E5 e
+* pa    *          0.0         0.0         0.0         0.0 s
+* pa    *          0.0         0.0 e
+*
+*
+*******   type           num        userid                component name
+valve                     40             0                        unnamed
+*       ncells         nodes          jun1          jun2          epsw
+             0             0            40            10           0.0
+*         ichf         iconc          ivty          ivps         nvtb2
+             1             0             0             1             0
+*         ivtr          ivsv         nvtb1          nvsv          nvrf
+             0             0             0             0             0
+*       ivtrov        ivtyov        ivtrlo    intlossoff        nkopen
+             1             0             0             0             0
+*         rvmx          rvov        fminov        fmaxov
+           1.0           1.0           0.0           1.0
+*        radin            th         houtl         houtv         toutl
+           0.0           0.0           0.0           0.0           0.0
+*        toutv         avlve         hvlve        favlve          xpos
+           0.0          0.05           0.1           0.0           1.0
+* dx    *  f  0.0000e+00 e
+* vol   *  f  0.0000e+00 e
+* fa    *  f 0.038013271 e
+* kfac  *  f         0.0 e
+* grav  *  f         1.0 e
+* hd    *  f        0.22 e
+* nff   *  f           1 e
+* alp   *  f  0.0000e+00 e
+* vl    *  f         0.0 e
+* vv    *  f         0.0 e
+* tl    *  f  0.0000e+00 e
+* tv    *  f  0.0000e+00 e
+* p     *  f  0.0000e+00 e
+* pa    *  f  0.0000e+00 e
+*
+*
+*******   type           num        userid                component name
+valve                     50             0                        unnamed
+*       ncells         nodes          jun1          jun2          epsw
+             0             0            30            20           0.0
+*         ichf         iconc          ivty          ivps         nvtb2
+             1             0             0             1             0
+*         ivtr          ivsv         nvtb1          nvsv          nvrf
+             0             0             0             0             0
+*       ivtrov        ivtyov        ivtrlo    intlossoff        nkopen
+             2             0             0             0             0
+*         rvmx          rvov        fminov        fmaxov
+           1.0           1.0           0.0           1.0
+*        radin            th         houtl         houtv         toutl
+           0.0           0.0           0.0           0.0           0.0
+*        toutv         avlve         hvlve        favlve          xpos
+           0.0          0.05           0.1           0.0           1.0
+* dx    *  f  0.0000e+00 e
+* vol   *  f  0.0000e+00 e
+* fa    *  f 0.038013271 e
+* kfac  *  f         0.0 e
+* grav  *  f         1.0 e
+* hd    *  f        0.22 e
+* nff   *  f           1 e
+* alp   *  f  0.0000e+00 e
+* vl    *  f         0.0 e
+* vv    *  f         0.0 e
+* tl    *  f  0.0000e+00 e
+* tv    *  f  0.0000e+00 e
+* p     *  f  0.0000e+00 e
+* pa    *  f  0.0000e+00 e
+*
+*
+*******   type           num        userid                component name
+break                     60             0                     Atmosphere
+*         jun1          ibty          isat          ioff      adjpress
+            20             0             0             0             0
+*         dxin         volin         alpin           tin           pin
+           1.0           1.0           0.0         300.0         1.0E5
+*         pain        concin          rbmx          poff          belv
+           0.0           0.0        1.0E20           0.0           0.0
+*
+*
+*******   type           num        userid                component name
+break                     70             0                   Atmosphere 2
+*         jun1          ibty          isat          ioff      adjpress
+            10             0             0             0             0
+*         dxin         volin         alpin           tin           pin
+           1.0           1.0           0.0         300.0         1.0E5
+*         pain        concin          rbmx          poff          belv
+           0.0           0.0        1.0E20           0.0           0.0
+*
+*
+********************************************
+* Starting Heat Structure Section of Model *
+********************************************
+*
+*******   type           num        userid                component name
+htstr                     20             1                           wall
+*       nzhstr         grids         hscyl          ichf
+             5             0             1             1
+*    nofuelrod         plane        liqlev        iaxcnd
+             1             3             0             0
+*        nmwrx          nfci         nfcil          hdri          hdro
+             0             0             1           0.0           0.0
+*         nhot         nodes          fmon         nzmax       reflood
+             0             5             0           100             0
+*     dtxht(1)      dtxht(2)         dznht         hgapo
+           0.0           0.0        1.0E-3        6300.0
+*
+*  idbcin *           0           0           0           0 s
+*  idbcin *           0 e
+*  idbcon *           0           0           0           0 s
+*  idbcon *           0 e
+*qflxbco1 *         0.0 e
+*qflxbco1 *         0.0 e
+*qflxbco1 *         0.0 e
+*qflxbco1 *         0.0 e
+*qflxbco1 *         0.0 e
+*qflxbco2 *         0.0 e
+*qflxbco2 *         0.0 e
+*qflxbco2 *         0.0 e
+*qflxbco2 *         0.0 e
+*qflxbco2 *         0.0 e
+* dhtstrz *       0.032       0.032       0.032       0.032 s
+* dhtstrz *       0.032 e
+*   rdx   *         1.0 e
+*  radrd  *        0.11        0.16        0.21        0.26        0.31 e
+*  matrd  *           6           6           6           6 e
+*    nfax *           1           1           1           1 s
+*    nfax *           1 e
+*    rftn *       300.0       300.0       300.0       300.0 s
+*    rftn *       300.0       300.0       300.0       300.0 s
+*    rftn *       300.0       300.0       300.0       300.0 s
+*    rftn *       300.0       300.0       300.0       300.0 s
+*    rftn *       300.0       300.0       300.0       300.0 s
+*    rftn *       300.0       300.0       300.0       300.0 s
+*    rftn *       300.0 e
+*
+*******   type           num        userid                component name
+htstr                     30             1                Heating element
+*       nzhstr         grids         hscyl          ichf
+             1             0             1             1
+*    nofuelrod         plane        liqlev        iaxcnd
+             1             3             0             0
+*        nmwrx          nfci         nfcil          hdri          hdro
+             0             0             1           0.0           0.0
+*         nhot         nodes          fmon         nzmax       reflood
+             0             5             0           100             0
+*     dtxht(1)      dtxht(2)         dznht         hgapo
+           0.0           0.0        1.0E-3        6300.0
+*
+*  idbcin *           2 e
+*  idbcon *           0 e
+* hcomon1 *          10           1           0           0 e
+*qflxbco2 *         0.0 e
+* dhtstrz * 0.026666667 e
+*   rdx   *         1.0 e
+*  radrd  *        0.11       0.115        0.12       0.125        0.13 e
+*  matrd  *           6           6           6           6 e
+*    nfax *           1 e
+*    rftn *       300.0       300.0       300.0       300.0 s
+*    rftn *       300.0 e
+********************************************
+* Finished Heat Structure Section of Model *
+********************************************
+*
+*
+*
+end
+*
+*****************
+* Timestep Data *
+*****************
+*        dtmin         dtmax          tend         rtwfp
+        1.0E-6           1.0         1.0          10.0
+*        edint         gfint        dmpint        sedint
+         1.0           1.0         1.0           1.0
+*
+*      endflag
+          -1.0

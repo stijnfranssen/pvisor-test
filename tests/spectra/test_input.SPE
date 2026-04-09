@@ -1,0 +1,71 @@
+*
+= Exercise
+*
+* =====================  SOLVER (TIME STEP) DATA  ============================
+*
+900000                   0.0                *  Start time
+*                                           *
+*      DTMAX  DTMIN    DTPRT   DTPLT  TEND  *  Time step data
+900001  1.0   0.001   1000.0  100.0   10.0  *  (1)
+*                                           *
+*
+* ====================  CV - Control Volume Data  ======================
+*
+105100   Inlet plenum
+110100   1.000     1.000              *  H [m], A [m2]
+111100  -1.000     1.000    1.000     *  Z [m], A-hor, A-ver, ..., D-hyd
+120100   7.00E+6  600.0               *  atms: P], T;  pool: Z, T
+121100   2 1.0                        *  atms: gas composition
+100100   1                            *  fixed conditions
+*
+105200   Channel
+110200   0.200     3.142E-4           *  H [m], A [m2]
+111200   0.000     3.142E-4 3.142E-4  *  Z [m], A-hor, A-ver, ..., D-hyd
+120200   7.00E+6  600.0               *  atms: P], T;  pool: Z, T
+121200   2 1.0                        *  atms: gas composition
+*
+105300   Outlet plenum
+110300   1.000     1.000              *  H [m], A [m2]
+111300   0.200     1.000    1.000     *  Z [m], A-hor, A-ver, ..., D-hyd
+120300   7.00E+6  600.0               *  atms: P], T;  pool: Z, T
+121300   2 1.0                        *  atms: gas composition
+100300   1                            *  fixed conditions
+*
+* ====================  JN (Junctions) DATA  ===========================
+*
+205100  Inlet
+205200  Outlet
+*                   Area      Elev.   Length  Diam.   Height  Flow
+*        From  To   [m2]       [m]     [m]     [m]      [m]   Dir.
+200100   100   200  3.142E-4  0.000   0.100   0.020     0.0    1
+200200   200   300  3.142E-4  0.200   0.100   0.020     0.0    1
+*      Length  Roughness  Diameter  K-forward  K-reverse
+*        [m]      [m]       [m]        [-]        [-]
+210100   0.0      5.0E-5    0.0        1.0        1.0
+210200   0.0      5.0E-5    0.0        1.0        1.0
+*
+230100   001  002  * inlet flows
+*
+*
+* =====================  TABULAR FUNCTION DATA  ============================
+*
+605001 Gas flow, kg/s
+600001  0.0  0.01 
+*
+605002 Liquid flow, kg/s
+600002  0.0  0.0
+*
+* =====================  MATERIAL PROPERTY DATA  ============================
+*
+805100   Stainless steel
+801100    0.0    20.0    *  k [W/m2-K]
+802100    0.0  8000.0    *  r [kg/m3]
+803100    0.0   500.0    *  c [J/kg/K]
+*
+805200   Graphite
+801200    0.0    50.0    *  k [W/m2-K]
+802200    0.0  2000.0    *  r [kg/m3]
+803200    0.0  1000.0    *  c [J/kg/K]
+*
+* ========================  end of data file     =============================
+*

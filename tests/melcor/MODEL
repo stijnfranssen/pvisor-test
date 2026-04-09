@@ -1,0 +1,114 @@
+! ======================================================================
+!   PVISOR MELCOR EXAMPLE INPUT
+! ======================================================================
+! Input file name   : MODEL
+! Last modified     : 2026-02-20
+!    in model tag   : -
+! 
+! No. components    :
+! ------------------------ 
+!    # CVs          :
+!    # FLs          :
+!    # HSs          :
+!    # TFs          :
+!    # CFs          :
+! ======================================================================
+! GENERAL PROPERTIES
+! Example model for PVISOR paper
+! ======================================================================
+
+
+! ===================== CONTROL VOLUMES (CV) INPUT =====================
+CVH_INPUT
+
+! Left BOUNDARY
+CV_ID     'BND-CV001'  001
+CV_TYP    'PIPE'
+CV_THR    NONEQUIL  NOFOG  TIME-INDEP
+CV_THERM  3
+		  1  PVOL  1.00000E+05  ! [Pa] - 1 bar
+		  2  ZPOL  1.00000E-01  ! [m] - full
+		  3  TPOL  303.15       ! [K] - 30 C
+CV_ARE    CF  'MVEL-FL002'  ! [m/s]
+CV_VAT    2  ! elev.[m]   vol.[m3]
+		  1  0.00000E+00  0.0
+          2  1.00000E-01  7.85398E-03  ! HORIZONTAL: L = 1 m
+
+! Active volume
+CV_ID     'CVH-CV002'  002
+CV_TYP    'PIPE'
+CV_THR    NONEQUIL  NOFOG  ACTIVE
+CV_THERM  3
+		  1  PVOL  1.00000E+05  ! [Pa] - 1 bar
+		  2  ZPOL  1.00000E-01  ! [m] - full
+		  3  TPOL  293.15       ! [K] - 20 C
+CV_ARE    NOCF  7.85398E-03  ! [m2] - r = 0.05 m
+CV_VAT    2  ! elev.[m]   vol.[m3]
+		  1  0.00000E+00  0.0
+          2  1.00000E-01  7.85398E-03  ! HORIZONTAL: L = 1 m
+
+! Right BOUNDARY
+CV_ID     'BND-CV003'  003
+CV_TYP    'PIPE'
+CV_THR    NONEQUIL  NOFOG  TIME-INDEP
+CV_THERM  3
+		  1  PVOL  1.00000E+05  ! [Pa] - 1 bar
+		  2  ZPOL  1.00000E-01  ! [m] - full
+		  3  TPOL  293.15       ! [K] - 20 C
+CV_ARE    NOCF  7.85398E-03  ! [m2] - r = 0.05 m
+CV_VAT    2  ! elev.[m]   vol.[m3]
+		  1  0.00000E+00  0.0
+          2  1.00000E-01  7.85398E-03  ! HORIZONTAL: L = 1 m
+
+
+! ======================= FLOW PATHS (FL) INPUT ========================
+FL_INPUT
+
+! Left BOUNDARY -> active volume
+FL_ID     'FL002'  002
+!		  fromCV        toCV        from-elev[m] to-elev[m]
+FL_FT     'BND-CV001'  'CVH-CV002'  5.00000E-02  5.00000E-02
+!		  area[m2]     length[m]    open from-h[m]    to-h[m]
+FL_GEO    7.85398E-03  1.00000E+00  1.0  1.00000E-01  1.00000E-01  ! D for horizontal FL
+FL_JSW    3  0  0
+FL_USL    0.0  0.0
+FL_SEG    1  ! area[m2]   length[m]    D-hyd[m]     roughness[m]
+		  1  7.85398E-03  1.00000E+00  1.00000E-01  5.00000E-05
+FL_VTM    1 ! ID   TF/CF ID  ! mass flow controlled by TF
+          1 'FL002'  CF  'MVEL-FL002'
+
+! Active volume -> right BND
+FL_ID     'FL003'  003
+!		  fromCV       toCV         from-elev[m] to-elev[m]
+FL_FT     'CVH-CV002'  'BND-CV003'  5.00000E-02  5.00000E-02
+!		  area[m2]     length[m]    open from-h[m]    to-h[m]
+FL_GEO    7.85398E-03  1.00000E+00  1.0  1.00000E-01  1.00000E-01  ! D for horizontal FL
+FL_JSW    3  0  0
+FL_USL    0.0  0.0
+FL_SEG    1  ! area[m2]   length[m]    D-hyd[m]     roughness[m]
+		  1  7.85398E-03  1.00000E+00  1.00000E-01  5.00000E-05
+
+
+! ==================== CONTROL FUNCTIONS (CF) INPUT ====================
+! Input for enforced flow in flow paths is in [m/s] (for some reason).
+! This converts the desired mass flow in the input TF to flow velocity for FL002
+
+CF_INPUT
+
+! Reactor input power
+CF_ID     'CF-MFLOW-FL002'  201  TAB-FUN
+CF_SAI    1.0  0.0  1.00000E-10  ! initialize at 0 flow. '0.0' is not possible!
+CF_MSC    'TF-MFLOW-FL002'
+CF_ARG    1 ! Arg.      Sc.  Add.
+          1  EXEC-TIME  1.0  0.0
+
+! Fluid flow [m/s] from desired mass flow [kg/s]
+CF_ID       'MVEL-FL002'  202  FORMULA
+CF_FORMULA  3  m/(rho*A)
+            1  m      CF-VALU('CF-MFLOW-FL002')  ! [kg/s] - mass flow input
+            2  rho    CVH-RHO(001,POOL)          ! [kg/m3] - density of CV001
+            3  A      7.85398E-03                ! [m2] - main flow area of CV001
+
+! ======================================================================
+!   END OF PVISOR MELCOR EXAMPLE INPUT
+! ======================================================================

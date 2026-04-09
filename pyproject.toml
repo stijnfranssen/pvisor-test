@@ -1,0 +1,30 @@
+[build-system]
+requires = ["maturin>=1.8,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "pvisor"
+dynamic = ["version"]
+requires-python = ">=3.8"
+description = "Read System Thermal Hydraulic output"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = ["pandas", "numpy", "pytest", "sphinx", "sphinx_rtd_theme", "maturin", "py-xdrlib"]
+[tool.maturin]
+features = ["pyo3/extension-module"]
+authors = [
+    {name = "Stijn Franssen-van Rijsingen", email = "stijn.franssen@nrgpallas.com"},
+    {name = "Bart T.H. Verdonschot", email = "bart.verdonschot@nrgpallas.com"}
+]
+description = "Library for reading system thermo-hydraulic code plot files."
+license = "MIT"
+keywords = ["thermalhydraulic", "thermohydraulic", "SPECTRA", "RELAP", "TRACE", "MELCOR"]
+
+[project.urls]
+Repository = "https://github.com/stijnfranssen/pvisor"

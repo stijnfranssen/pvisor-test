@@ -1,0 +1,77 @@
+! ======================================================================
+!   RUN FILE
+! ======================================================================
+! Last modified     : 2026-02-20
+!    in model tag   : -
+! ======================================================================
+! Example input for PVISOR paper
+! ======================================================================
+
+
+! ========================= FILE DATA =========================
+
+! File names
+MEG_DIAGFILE     'PVISOR-MELGEN.DIA'
+MEL_DIAGFILE     'PVISOR-MELCOR.DIA'
+MEG_OUTPUTFILE   'PVISOR-MELGEN.OUT'
+MEL_OUTPUTFILE   'PVISOR-MELCOR.OUT'
+RESTARTFILE      'PVISOR.RST' NCYCLE 0
+PLOTFILE         'PVISOR.PTF'
+MESSAGEFILE      'PVISOR.MES'
+STOPFILE         'PVISOR.STP'
+EXTDIAGFILE      'PVISOR.XDIA'
+
+
+! ============================ MELCOR INPUT ============================
+PROGRAM MELCOR
+
+EXEC_INPUT
+
+EXEC_TITLE  'PVISOR-MELCOR'
+
+! End time
+EXEC_TEND  2.00000E+01  ! 20 seconds
+EXEC_EXACTTIME  1 ! TIME
+                1  2.00000E+01  ! end exactly at end time
+
+! Time step data
+EXEC_TIME  1 ! TIME        DTMAX        DTMIN        DTEDIT    DTPLOT  DTREST
+           1  0.00000E+00  1.00000E-01  1.00000E-08  1.00E+10  0.1     1.00E+10
+
+! CPU limits
+EXEC_CPULEFT  60.0              ! 1 minute
+EXEC_CPULIM   60000.0           ! 1 week (long, but arbitrary)
+EXEC_CYMESF   1  100  100  100  ! cycle message frequency
+
+END PROGRAM MELCOR
+! ============================ MELGEN INPUT ============================
+PROGRAM MELGEN
+
+EXEC_INPUT
+
+EXEC_TITLE  'PVISOR-MELCOR'
+
+EXEC_GLOBAL_DFT  2.0  ! ensure MELCOR 2.0 standards (default)
+
+! Start time
+EXEC_TSTART  0.00000E+00
+
+! ======== SCENARIO ========
+! Basic horizontal pipe with increasing mass flow
+
+! == MODEL FILES ==
+INCLUDE  "./MODEL"
+
+! == TF ==
+TF_INPUT
+
+! Enforced mass flow in FL002
+TF_ID     'TF-MFLOW-FL002'  1.0  0.0
+TF_TAB    2 ! t[s]        dm/dt[kg/s]
+          1  0.00000E+00  0.00000E+00  ! from 0 to 10 kg/s in 20 seconds 
+          2  2.00000E+01  1.00000E+01
+
+END PROGRAM MELGEN
+! ======================================================================
+!   END OF RUN FILE
+! ======================================================================
