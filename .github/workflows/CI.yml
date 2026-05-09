@@ -10,7 +10,7 @@ on:
     branches:
       - main
     tags:
-      - '*'
+      - "*"
   pull_request:
   workflow_dispatch:
 
@@ -59,7 +59,8 @@ jobs:
           pip install pytest
           pytest
       - name: pytest
-        if: ${{ !startsWith(matrix.platform.target, 'x86') && matrix.platform.target != 'ppc64' }}
+        if: ${{ !startsWith(matrix.platform.target, 'x86') && matrix.platform.target !=
+          'ppc64' }}
         uses: uraimo/run-on-arch-action@v2
         with:
           arch: ${{ matrix.platform.target }}
@@ -74,7 +75,6 @@ jobs:
             pip3 install --upgrade pip
             pip3 install pvisor --find-links dist --force-reinstall
             pytest
-
 
   musllinux:
     runs-on: ${{ matrix.platform.runner }}
@@ -225,7 +225,6 @@ jobs:
         with:
           name: wheels-sdist
           path: dist
-
   # release:
   #   name: Release
   #   runs-on: ubuntu-latest

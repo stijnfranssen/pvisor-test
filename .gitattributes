@@ -7,7 +7,6 @@
 # Ignore top level
 .github export-ignore
 
-
 # Plot output files
 *.csv binary linguist-vendored
 *.PTF binary linguist-vendored
