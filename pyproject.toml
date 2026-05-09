@@ -15,16 +15,24 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Topic :: Scientific/Engineering :: Physics",
 ]
-dependencies = ["pandas", "numpy", "pytest", "sphinx", "sphinx_rtd_theme", "maturin", "py-xdrlib"]
+dependencies = ["pandas", "numpy", "pytest", "maturin", "py-xdrlib"]
+optional-dependencies = { docs = ["sphinx", "sphinx_rtd_theme"] }
 [tool.maturin]
 features = ["pyo3/extension-module"]
 authors = [
-    {name = "Stijn Franssen-van Rijsingen", email = "stijn.franssen@nrgpallas.com"},
-    {name = "Bart T.H. Verdonschot", email = "bart.verdonschot@nrgpallas.com"}
+    { name = "Stijn Franssen-van Rijsingen", email = "stijn.franssen@nrgpallas.com" },
+    { name = "Bart T.H. Verdonschot", email = "bart.verdonschot@nrgpallas.com" },
 ]
 description = "Library for reading system thermo-hydraulic code plot files."
 license = "MIT"
-keywords = ["thermalhydraulic", "thermohydraulic", "SPECTRA", "RELAP", "TRACE", "MELCOR"]
+keywords = [
+    "thermalhydraulic",
+    "thermohydraulic",
+    "SPECTRA",
+    "RELAP",
+    "TRACE",
+    "MELCOR",
+]
 
 [project.urls]
 Repository = "https://github.com/stijnfranssen/pvisor"
